@@ -1,0 +1,145 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Paper1",
+		"_postman_id": "e3089be6-a1f5-d1fa-a361-0324ef99108b",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Customer register request",
+			"request": {
+				"url": "http://localhost:3000/customer/sms",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"phone\" : \"79123456789\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Seller  register request",
+			"request": {
+				"url": "http://localhost:3000/seller/sms",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"phone\" : \"79123456789\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Register customer",
+			"request": {
+				"url": "http://localhost:3000/customer",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"phone\" : \"79123456789\",\n\t\"name\" : \"Customer Name\",\n\t\"password\" : \"qqqqqq\",\n\t\"code\" : \"kXMDZV\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Register seller",
+			"request": {
+				"url": "http://localhost:3000/seller",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"phone\" : \"79123456789\",\n\t\"name\" : \"Seller Name\",\n\t\"password\" : \"wwwwww\",\n\t\"code\" : \"VQMp9w\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Customer Login",
+			"request": {
+				"url": "http://localhost:3000/customer/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"phone\" : \"79123456789\",\n\t\"password\" : \"qqqqqq\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Seller Login",
+			"request": {
+				"url": "http://localhost:3000/seller/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"phone\" : \"79123456789\",\n\t\"password\" : \"wwwwww\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "LogOut",
+			"request": {
+				"url": "http://localhost:3000/logout",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
