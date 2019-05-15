@@ -11,6 +11,14 @@ router.post('/login', (req, res, next) => {
     passport.authenticate('local'),
     (req, res) => res.end());
 
+router.get('/', function (req, res) {
+        res.render('customer.hbs');
+});
+
+router.get('/signup', function (req, res) {
+    res.render('customer-signup.hbs');
+});
+
 
 router.post('/', (req, res, next) =>
     smsCode.get(req.body.phone, req.body.code)

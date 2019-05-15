@@ -4,6 +4,7 @@ const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const expressHbs = require('express-handlebars');
 const redisStore = require('connect-redis')(session);
 const dbs = require('./libs/dbs');
 const config = require('./config/' + (process.env.NODE_ENV || 'development'));
@@ -22,7 +23,14 @@ const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'hbs');
+app.engine("hbs", expressHbs(
+    {
+        layoutsDir: "views/layouts",
+        defaultLayout: "layout",
+        extname: "hbs"
+    }
+))
 
 app.use(logger('dev'));
 app.use(express.json());
