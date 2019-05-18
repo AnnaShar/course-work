@@ -1,0 +1,14 @@
+
+<h1>Hello, customer!</h1>
+<div class="signup-form">
+    <form action="/customer/signup" method="post">
+        <p><input type="text" name="phone" id="phone-number" >
+            <label for="phone-number">Input your phone number</label></p>
+        <input class="submit-button" type="submit" name="sign-up" value="Send code">
+    </form>
+</div>
+
+<script>
+    $('#phone-number').mask('+7(999)999-99-99');
+</script>
+<!--<input type="button" name="sign-up" value="Send code" onclick="signUp(phone-number.value)">-->

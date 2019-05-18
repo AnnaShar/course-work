@@ -49,7 +49,8 @@ passport.serializeUser((userIdAndRoleId, done) => done(null, userIdAndRoleId));
 passport.deserializeUser((userIdAndRoleId, done) =>
 User.getByIdAndRole(userIdAndRoleId)
     .then(user => done(null, user)) .catch(err => done(err)));
-passport.use('local', new localStrategy({
+
+passport.use('login', new localStrategy({
   usernameField: 'phone',
   passwordField: 'password',
   passReqToCallback: true },

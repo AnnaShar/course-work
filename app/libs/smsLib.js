@@ -22,3 +22,10 @@ exports.send = (phone, text) => {
             return Promise.resolve();
         })
 };
+
+exports.sendImitate = (phone, text) => {
+    console.log('Sending sms code')
+    console.log('phone number - '+ phone);
+    console.log('code - '+text);
+    console.log('************************');
+};
