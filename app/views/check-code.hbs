@@ -1,9 +1,44 @@
+<div class="wrap-vertical">
+    <div class="instructions">Enter the code from sms</div>
+    <div class="error-message">{{errorMessage}}</div>
+    <form class="code-form" action="/customer/signup/checkcode" method="post">
+        <input type="hidden" name="phone" id="phone-number" value={{phone}}>
+        <input type="text" name="code" id="phone-code" >
+        <input class="submit-button" type="submit" name="sign-up" value="Check code">
+    </form>
 
-<form action="/customer/signup/checkcode" method="post">
-    <!--<div> Phone number: </div>-->
-    <p><input type="text" name="phone" id="phone-number" value={{phone}}>
-        <label for="phone-code">Phone number</label></p>
-    <p><input type="text" name="code" id="phone-code" >
-        <label for="phone-code">Input code</label></p>
-    <input type="submit" name="sign-up" value="Check code">
-</form>
+    <form class="resend-code-form" action="/customer/signup" method="post">
+        <p id="countdown" style="display: none">You can resend code in <span></span> seconds</p>
+        <input type="hidden" name="phone" id="phone-number" value={{phone}}>
+        <input class="mini-submit-button" id="resend-code" type="submit" name="send-code" value="resend code" style="display: none">
+    </form>
+</div>
+
+<div class="links-field">
+    <form action="/customer/login" method="get">
+        <div class="login-link"> If you already have an account, please
+            <input class="link-button" type="submit" name="to-login-page" value="LOGIN">
+        </div>
+    </form>
+</div>
+
+<script>
+    const countdown = $('#countdown span');
+    const sendCodeBut = $('#resend-code');
+    let     timer;
+    function startCountdown(){
+        let startFrom = 10;
+        countdown.text(startFrom).parent('p').show();
+        timer = setInterval(function(){
+            countdown.text(--startFrom);
+            if(startFrom <= 0) {
+                clearInterval(timer);
+                sendCodeBut.style.display=block;
+                countdown.style.display=none;
+            }
+        },1000);
+    }
+    $(document).ready(function () {
+        startCountdown();
+    });
+</script>

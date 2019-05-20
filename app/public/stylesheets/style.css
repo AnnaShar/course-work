@@ -10,25 +10,47 @@ body{
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  position: relative;
 
   background: url(https://html5book.ru/wp-content/uploads/2015/07/background39.png);
+  font-family: 'Comfortaa', cursive;
 }
 
-/*.wrap {*/
-  /*display: flex;*/
-  /*flex-direction: column;*/
-  /*justify-content: center;*/
+.wrap {
+  height: 210px;
+  width: 680px;
+  background: white;
+  border-radius: 20px;
+  border: 2px solid rgba(46,229,157,.4);
+  box-shadow: 0 0 2pt 2pt rgba(168, 243, 213, 0.29);
+}
 
-  /*!*height: 50%;*!*/
-  /*!*width: 50%;*!*/
-/*}*/
+.wrap-vertical{
+  height: 250px;
+  width: 430px;
+  background: white;
+  border-radius: 20px;
+  border: 2px solid rgba(46,229,157,.4);
+  position: absolute;
+  box-shadow: 0 0 2pt 2pt rgba(168, 243, 213, 0.29);
+  /* background-color: #d6bebe; */
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.links-field{
+  position: absolute;
+  bottom: 20%;
+}
 
 .button-area{
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 30%;
-  width: 50%;
+  height: 70%;
 }
 
 .submit-button {
@@ -47,7 +69,7 @@ body{
   letter-spacing: 3px;
   font-weight: 600;
   color: #524f4e;
-  background: white;
+  background: #5dffc5c9;;
   border:none;
   box-shadow: 0 8px 15px rgba(0,0,0,.1);
   transition: .3s;
@@ -71,3 +93,71 @@ h1{
   display: flex;
   flex-direction: column;
 }
+
+.instructions{
+  padding: 20px;
+  text-align: center;
+  color: #524f4e;
+  font-family: inherit;
+  font-size: 20px;
+}
+
+.additional-instructions{
+  font-size: 90%;
+  color: #777574;
+  padding: 5px;
+  text-align: center;
+  margin-top: -14px;
+}
+.phone-form {
+  display: flex;
+  flex-direction: column;
+  height: 50%;
+  align-items: center;
+  justify-content: space-around;
+}
+.error-message{
+  height: 28px;
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  padding: 3px;
+}
+.phone-number{
+  font-family: inherit;
+  width: 130px;
+  padding: 3px;
+  text-align: center;
+  border-radius: 10px;
+  border: 2px solid rgba(46,229,157,.4);
+  outline: none;
+}
+
+.phone-number:focus {
+  box-shadow: 0 0 3pt 2pt rgba(46,229,157,.4);
+}
+
+.login-link{
+  margin: 10px;
+  color: #524f4e;
+}
+
+.link-button{
+  border: 2px solid #5dffc5;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  color: #524f4e;
+  font-size: 13px;
+  letter-spacing: 1px;
+  background: transparent;
+}
+
+.link-button:hover{
+  background: white;
+  box-shadow: 0 0 3pt 2pt rgba(46,229,157,.4);
+}
+
+/*.scaled {*/
+  /*transform: scale(0.7, 1.5);*/
+/*}*/

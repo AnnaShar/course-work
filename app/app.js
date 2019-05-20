@@ -48,15 +48,29 @@ app.use(passport.session());
 passport.serializeUser((userIdAndRoleId, done) => done(null, userIdAndRoleId));
 passport.deserializeUser((userIdAndRoleId, done) =>
 User.getByIdAndRole(userIdAndRoleId)
-    .then(user => done(null, user)) .catch(err => done(err)));
+    .then(user => done(null, user))
+    .catch(err => done(err)));
 
 passport.use('login', new localStrategy({
   usernameField: 'phone',
   passwordField: 'password',
   passReqToCallback: true },
-    (req, phone, password, done) =>
+    (req, phone, password, done) =>{
+        // console.log("req:",req);
+        console.log("ph:",phone);
+        console.log("pass:",password);
+        console.log("done:",done);
         User.login(req.body)
-            .then(user => done(null, {id: user.id, roleId: user.roleId})) .catch(err => done(err)) ));
+            .then(user => {
+                console.log('user:', user);
+                return done(null, {id: user.id, roleId: user.roleId})
+            })
+            .catch(err => {
+                console.log('err:', err);
+                return done(err)
+            });
+
+    }));
 
 app.use('/customer', customer);
 app.use('/seller', seller);
@@ -68,18 +82,19 @@ app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+    console.log('will create an error');
+    next(createError(404));
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;
