@@ -1,12 +1,31 @@
-<form action="/customer/signup/registration" method="post">
-    <!--<div> Phone number: </div>-->
-    <p><input type="text" name="phone" id="phone-number" value={{phone}}>
-        <label for="phone-code">Phone number</label></p>
-    <p><input type="text" name="code" id="phone-code"  value={{code}}>
-        <label for="phone-code">Input code</label></p>
-    <p><input type="text" name="name" id="user-name" >
-        <label for="user-name">Name</label></p>
-    <p><input type="password" name="password" id="password" >
-        <label for="user-name">Password</label></p>
-    <input type="submit" name="sign-up" value="Register">
-</form>
+<div class="wrap-vertical big">
+    <div class="instructions">Finish your registration</div>
+    <div class="additional-instructions">Passwords must be at least 8 characters long and it must contain uppercase, lowercase characters and digits.</div>
+    <div class="error-message">{{errorMessage}}</div>
+
+    <form action="/customer/signup/registration" method="post">
+        <input type="hidden" name="phone" id="phone-number" value={{phone}}>
+        <input type="hidden" name="code" id="phone-code"  value={{code}}>
+
+        <div class="registration-input"><input type="text" name="name" id="user-name" value={{name}}>
+            <label for="user-name">Name</label></div>
+        <div class="registration-input"><input type="password" name="password" id="password1" >
+            <label for="user-name">Password</label></div>
+        <div class="registration-input"><input type="password" name="repeatPassword" id="password2" >
+            <label for="user-name">Repeat password</label></div>
+        <div class="button-wrap"><input class="submit-button" type="submit" name="sign-up" value="Register"></div>
+    </form>
+</div>
+
+<div class="links-field">
+    <form action="/customer/login" method="get">
+        <div class="login-link"> If you already have an account, please
+            <input class="link-button" type="submit" name="to-login-page" value="LOGIN">
+        </div>
+    </form>
+    <form action="/customer/signup" method="get">
+        <div class="login-link"> If you want to change phone number, please click
+            <input class="link-button" type="submit" name="to-signup-page" value="BACK">
+        </div>
+    </form>
+</div>

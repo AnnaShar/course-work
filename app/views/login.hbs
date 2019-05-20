@@ -1,10 +1,26 @@
-<form action="/customer/login" method="post">
-    <!--<div> Phone number: </div>-->
-    <p><input type="text" name="phone" id="phone-number">
-        <label for="phone-code">Phone number</label></p>
-    <p><input type="password" name="password" id="password-login">
-        <label for="password-login">Password</label></p>
-    <input type="hidden" name="role" value="customer">
-    <input type="submit" name="sign-up" value="Login">
-</form>
-{{errorMessage}}
+<div class="wrap-vertical medium">
+    <div class="instructions">Input your data to login</div>
+    <div class="error-message">{{errorMessage}}</div>
+
+    <form action="/customer/login" method="post">
+        <div class="registration-input"><input type="text" name="phone" id="phone-number" value={{phone}}>
+            <label for="user-name">Phone number</label></div>
+        <div class="registration-input"><input type="password" name="password" id="password" >
+            <label for="user-name">Password</label></div>
+
+        <input type="hidden" name="role" value="customer">
+        <div class="button-wrap"><input class="submit-button" type="submit" name="sign-up" value="Login"></div>
+    </form>
+</div>
+
+<div class="links-field">
+    <form action="/customer/signup" method="get">
+        <div class="login-link"> If you do not have an account, please
+            <input class="link-button" type="submit" name="to-signup-page" value="SIGN UP">
+        </div>
+    </form>
+</div>
+
+<script>
+    $('#phone-number').mask('+7(999)999-99-99');
+</script>

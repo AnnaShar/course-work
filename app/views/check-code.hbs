@@ -20,21 +20,28 @@
             <input class="link-button" type="submit" name="to-login-page" value="LOGIN">
         </div>
     </form>
+    <form action="/customer/signup" method="get">
+        <div class="login-link"> If you want to change phone number, please click
+            <input class="link-button" type="submit" name="to-signup-page" value="BACK">
+        </div>
+    </form>
 </div>
 
 <script>
+    $('#phone-code').mask('9999')
     const countdown = $('#countdown span');
+    const text = $('#countdown');
     const sendCodeBut = $('#resend-code');
     let     timer;
     function startCountdown(){
-        let startFrom = 10;
+        let startFrom = 5;
         countdown.text(startFrom).parent('p').show();
         timer = setInterval(function(){
             countdown.text(--startFrom);
             if(startFrom <= 0) {
                 clearInterval(timer);
-                sendCodeBut.style.display=block;
-                countdown.style.display=none;
+                sendCodeBut.css({'display':'block'});
+                text.css({'display':'none'});
             }
         },1000);
     }

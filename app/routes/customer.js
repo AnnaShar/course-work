@@ -5,6 +5,7 @@ const user = require('../repo/userRepository');
 const sms = require('../libs/smsLib');
 const customError = require('../libs/customError');
 const passport = require('passport');
+const passwValidator = require('password-validator');
 
 router.get('/', function (req, res){
    res.render('authorization-page');
@@ -70,12 +71,30 @@ router.post('/signup/checkcode', (req, res, next) => {
 //     res.redirect('/customer/signup');
 // });
 
-router.post('/signup/registration', (req, res, next) =>
-    // TODO проверка на правильность введенного кода
+router.post('/signup/registration', (req, res, next) =>{
+    if (!schema.validate(req.body.password)){
+        res.render('registration', {
+            phone: req.body.phone,
+            code: req.body.code,
+            name: req.body.name,
+            errorMessage: 'Password  is incorrect. Follow instructions about making passwords.'
+        });
+        return;
+    }
+    if (req.body.password===req.body.repeatPassword){
     user.register(req.body, 'customer')
         .then(() => smsCode.remove(req.body.phone))
         .then(() => res.redirect('/customer/login')) //TODO добавить сообщение про то, что регистарция прошла успешно
-             .catch(err => next(err)));
+             .catch(err => next(err))
+    }
+    else res.render('registration', {
+        phone: req.body.phone,
+        code: req.body.code,
+        name: req.body.code,
+        errorMessage: 'Passwords do not match.'
+    });
+});
+
 
 
 router.post('/login',
@@ -84,7 +103,10 @@ router.post('/login',
         successRedirect: '/customer/home'
     }),
     (err, req, res, next) => {
-    res.render('login', {errorMessage: JSON.stringify(err)});
+    let options = {errorMessage: err.sqlMessage};
+    if (err.sqlState==='45005')
+        options.phone = req.body.phone;
+    res.render('login', options);
     }
 );
 
@@ -109,8 +131,20 @@ router.get('/logout', (req, res) => {
     req.session.destroy(() => res.redirect('/customer'));         // [2]
 });
 
+router.get('/*', (req, res)=>{
+    res.redirect('/customer');
+});
+
 // router.get('/home', function(req, res){
 //     res.render('home');
 // });
 
+const schema = new passwValidator();
+schema
+    .is().min(8)                                    // Minimum length 8
+    .is().max(100)                                  // Maximum length 100
+    .has().uppercase()                              // Must have uppercase letters
+    .has().lowercase()                              // Must have lowercase letters
+    .has().digits()                                 // Must have digits
+    .has().not().spaces()                           // Should not have spaces
 module.exports = router;

@@ -40,10 +40,17 @@ body{
   right: 0;
   margin: auto;
 }
+.wrap-vertical.big{
+  height: 305px;
+}
+
+.wrap-vertical.medium{
+  height: 260px;
+}
 
 .links-field{
   position: absolute;
-  bottom: 20%;
+  bottom: 14%;
 }
 
 .button-area{
@@ -77,6 +84,34 @@ body{
 
 .submit-button:hover {
   background: #2EE59D;
+  box-shadow: 0 15px 20px rgba(46,229,157,.4);
+  color: white;
+  transform: translateY(-7px);
+}
+
+.mini-submit-button{
+  outline: none;
+  display: inline-block;
+  width: 125px;
+  height: 35px;
+  line-height: 35px;
+  border-radius: 39px;
+  margin: 10px 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: #524f4e;
+  background: #aedccbc9;
+  border: none;
+  box-shadow: 0 8px 15px rgba(0,0,0,.1);
+  transition: .3s;
+}
+
+.mini-submit-button:hover {
+  background: rgba(65, 130, 107, 0.79);
   box-shadow: 0 15px 20px rgba(46,229,157,.4);
   color: white;
   transform: translateY(-7px);
@@ -116,6 +151,17 @@ h1{
   align-items: center;
   justify-content: space-around;
 }
+.resend-code-form{
+  display: flex;
+  justify-content: center;
+}
+
+.code-form {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .error-message{
   height: 28px;
   color: red;
@@ -133,6 +179,18 @@ h1{
   outline: none;
 }
 
+#phone-code{
+  height: fit-content;
+  font-family: inherit;
+  width: 118px;
+  padding: 3px;
+  text-align: center;
+  border-radius: 10px;
+  border: 2px solid rgba(46,229,157,.4);
+  outline: none;
+}
+
+#phone-code,
 .phone-number:focus {
   box-shadow: 0 0 3pt 2pt rgba(46,229,157,.4);
 }
@@ -158,6 +216,39 @@ h1{
   box-shadow: 0 0 3pt 2pt rgba(46,229,157,.4);
 }
 
-/*.scaled {*/
-  /*transform: scale(0.7, 1.5);*/
-/*}*/
+#countdown{
+  color: #524f4e;
+  font-family: inherit;
+  text-align: center;
+}
+
+.registration-input{
+  position: relative;
+  height: 33px;
+  font-family: inherit;
+  color: #524f4e;
+}
+
+.registration-input > input{
+  position: absolute;
+  right:  10px;
+
+  font-family: inherit;
+  width: 145px;
+  padding: 3px;
+  text-align: center;
+  border-radius: 10px;
+  border: 2px solid rgba(46,229,157,.4);
+  outline: none;
+}
+
+.registration-input > label {
+  position: absolute;
+  left:  30px;
+  font-family: inherit;
+}
+
+.button-wrap{
+  display: flex;
+  justify-content: center;
+}
