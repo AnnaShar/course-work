@@ -8,8 +8,14 @@
         <div class="registration-input"><input type="password" name="password" id="password" >
             <label for="user-name">Password</label></div>
 
+            <!--<div class="button-wrap"><input class="forgot-password-button" type="button" name="forgot-password" id="forgot-password" value="Forgot password?"></div>-->
+
         <input type="hidden" name="role" value="customer">
-        <div class="button-wrap"><input class="submit-button" type="submit" name="sign-up" value="Login"></div>
+        <div class="button-wrap" id="login-button"><input class="submit-button" type="submit" name="sign-up" value="Login"></div>
+    </form>
+
+    <form class="forgot-password-form" action="/customer/login/forgotpassword" method="get">
+        <div class="button-wrap"><input class="forgot-password-button" type="submit" name="forgot-password" id="forgot-password" value="Forgot password?"></div>
     </form>
 </div>
 

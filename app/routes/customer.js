@@ -6,30 +6,21 @@ const sms = require('../libs/smsLib');
 const customError = require('../libs/customError');
 const passport = require('passport');
 const passwValidator = require('password-validator');
+const utils = require('../libs/utils');
+
 
 router.get('/', function (req, res){
-   res.render('authorization-page');
+    if (req.isAuthenticated()) {
+        res.redirect('/customer/home');
+    }
+    else {
+        res.render('authorization-page');
+    }
 });
 
 router.get('/signup', function (req, res) {
     res.render('signup.hbs');
 });
-
-// router.post('/signup', (req, res, next) =>{
-//     if(user.checkCustomerAbsence(req.body.phone)){
-//         console.log('test 1');
-//         let code = smsCode.add(req.body.phone);
-//         if (code) {
-//             console.log('test 2');
-//             sms.sendImitate(req.body.phone, code);
-//         }
-//         console.log('test 3');
-//
-//         res.render('check-code');
-//     }},
-//     (err, req, res, next) => {
-//         res.render('signup', {errorMessage: err.message });
-// });
 
 router.get('/signup/check-code', (req, res, next)=>{
     res.render('check-code', {
@@ -38,9 +29,10 @@ router.get('/signup/check-code', (req, res, next)=>{
 });
 
 router.post('/signup', (req, res, next) =>
-    user.checkCustomerAbsence(req.body.phone)
-        .then(() => smsCode.add(req.body.phone))
-        .then(code  => sms.sendImitate(req.body.phone, code)) //TODO не забыть поставить нормалную отправку
+    user.checkCustomerAbsence(utils(req.body.phone))
+        .then(() => smsCode.remove(utils(req.body.phone)))
+        .then(() => smsCode.add(utils(req.body.phone)))
+        .then(code  => sms.sendImitate(utils(req.body.phone), code)) //TODO не забыть поставить нормалную отправку
         .then(() => res.render('check-code', {
             phone: req.body.phone
         }))
@@ -50,8 +42,7 @@ router.post('/signup', (req, res, next) =>
 
 
 router.post('/signup/checkcode', (req, res, next) => {
-    // if (req.body.phone && req.body.code) {
-        smsCode.get(req.body.phone, req.body.code)
+        smsCode.get(utils(req.body.phone), req.body.code)
             .then(result => {
                 if (!result) return Promise.reject(new customError('You put a wrong code. Please, try again.', 400));
                 return res.render('registration', {
@@ -59,17 +50,10 @@ router.post('/signup/checkcode', (req, res, next) => {
                     code: req.body.code
                 });
             })
-            .then(() => smsCode.remove(req.body.phone))
+            .then(() => smsCode.remove(utils(req.body.phone)))
             .catch(err => res.render('check-code', {errorMessage: err.message, phone: req.body.phone})
             )
-    // }
-    // else res.redirect('/customer/signup');
 });
-
-// router.get('/signup/checkcode', (req, res, next) => {
-//     console.log('hi');
-//     res.redirect('/customer/signup');
-// });
 
 router.post('/signup/registration', (req, res, next) =>{
     if (!schema.validate(req.body.password)){
@@ -83,32 +67,29 @@ router.post('/signup/registration', (req, res, next) =>{
     }
     if (req.body.password===req.body.repeatPassword){
     user.register(req.body, 'customer')
-        .then(() => smsCode.remove(req.body.phone))
-        .then(() => res.redirect('/customer/login')) //TODO добавить сообщение про то, что регистарция прошла успешно
+        .then(() => smsCode.remove(utils(req.body.phone)))
+        .then(() =>res.render('finish', {message:'You have been registrated!'}))
              .catch(err => next(err))
     }
     else res.render('registration', {
         phone: req.body.phone,
         code: req.body.code,
-        name: req.body.code,
+        name: req.body.name,
         errorMessage: 'Passwords do not match.'
     });
 });
 
-
-
 router.post('/login',
-    passport.authenticate('login',  {
-        failureRedirect: '/customer/login',
-        successRedirect: '/customer/home'
-    }),
-    (err, req, res, next) => {
-    let options = {errorMessage: err.sqlMessage};
-    if (err.sqlState==='45005')
-        options.phone = req.body.phone;
-    res.render('login', options);
-    }
-);
+    passport.authenticate('login'),
+    function(req, res, next) {
+        res.render('home');
+    },
+    function (err, req, res, next){
+        let options = {errorMessage: err.sqlMessage};
+        if (err.sqlState==='45005')
+            options.phone = req.body.phone;
+        res.render('login', options);
+});
 
 router.get('/login', function (req, res) {
     if (req.isAuthenticated()) {
@@ -117,13 +98,71 @@ router.get('/login', function (req, res) {
     else res.render('login.hbs');
 });
 
+router.get('/login/forgotpassword', (req,res)=>{
+    res.render('forgot-password', {phone: req.body.phone});
+});
+
+router.post('/login/confirmphone', (req, res)=>{
+    user.checkPhoneExisting(req.body.phone)
+        .then(() => smsCode.remove(utils(req.body.phone)))
+        .then(() => smsCode.add(utils(req.body.phone)))
+        .then(code  => sms.sendImitate(utils(req.body.phone), code)) //TODO не забыть поставить нормалную отправку
+        .then(() => res.render('confirm-phone', {
+            phone: req.body.phone
+        }))
+        .catch(err => {
+            res.render('forgot-password', {errorMessage: err.sqlMessage});
+})});
+
+router.post('/login/checkcode', (req,res)=>{
+    smsCode.get(utils(req.body.phone), req.body.code)
+        .then(result => {
+            if (!result) return Promise.reject(new customError('You put a wrong code. Please, try again.', 400));
+            return res.render('new-password', {
+                phone: req.body.phone,
+                code: req.body.code
+            });
+        })
+        .then(() => smsCode.remove(utils(req.body.phone)))
+        .catch(err => res.render('confirm-phone', {errorMessage: err.message, phone: req.body.phone})
+        )
+});
+
+router.post('/login/changepassword', (req, res)=>{
+    if (!schema.validate(req.body.password)){
+        res.render('new-password', {
+            phone: req.body.phone,
+            code: req.body.code,
+            errorMessage: 'Password  is incorrect. Follow instructions about making passwords.'
+        });
+        return;
+    }
+    if (req.body.password===req.body.repeatPassword){
+        user.changePassword(req.body, 'customer')
+            .then(() => smsCode.remove(utils(req.body.phone)))
+            .then(() => res.render('finish', {message:'Your password has been changed.'}))
+            //res.redirect('/customer/login')) //TODO добавить сообщение про то, что регистарция прошла успешно
+            .catch(err => next(err))
+    }
+    else res.render('new-password', {
+        phone: req.body.phone,
+        code: req.body.code,
+        errorMessage: 'Passwords do not match.'
+    });
+});
+
 router.get('/home', function (req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
     res.redirect('/customer');
 }, function(req, res){
-    res.render('home')
+    res.render('home');
+});
+
+router.get('/account/changepassword', (req, res)=>{
+    //let phone = req.signedCookie['phone'];
+    res.render('change-password', {phone:phone});
 });
 
 router.get('/logout', (req, res) => {
@@ -135,9 +174,6 @@ router.get('/*', (req, res)=>{
     res.redirect('/customer');
 });
 
-// router.get('/home', function(req, res){
-//     res.render('home');
-// });
 
 const schema = new passwValidator();
 schema

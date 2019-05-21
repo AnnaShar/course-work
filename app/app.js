@@ -11,6 +11,7 @@ const config = require('./config/' + (process.env.NODE_ENV || 'development'));
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const User = require('./repo/userRepository');
+//const cookieParser = require('cookie-parser');
 
 const customer = require('./routes/customer');
 const seller = require('./routes/seller');
@@ -56,17 +57,11 @@ passport.use('login', new localStrategy({
   passwordField: 'password',
   passReqToCallback: true },
     (req, phone, password, done) =>{
-        // console.log("req:",req);
-        console.log("ph:",phone);
-        console.log("pass:",password);
-        console.log("done:",done);
         User.login(req.body)
             .then(user => {
-                console.log('user:', user);
                 return done(null, {id: user.id, roleId: user.roleId})
             })
             .catch(err => {
-                console.log('err:', err);
                 return done(err)
             });
 

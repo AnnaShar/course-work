@@ -1,13 +1,13 @@
 <div class="wrap-vertical">
     <div class="instructions">Enter the code from sms</div>
     <div class="error-message">{{errorMessage}}</div>
-    <form class="code-form" action="/customer/signup/checkcode" method="post">
+    <form class="code-form" action="/customer/login/checkcode" method="post">
         <input type="hidden" name="phone" id="phone-number" value={{phone}}>
         <input type="text" name="code" id="phone-code" >
         <input class="submit-button" type="submit" name="sign-up" value="Check code">
     </form>
 
-    <form class="resend-code-form" action="/customer/signup" method="post">
+    <form class="resend-code-form" action="/customer/login/confirmphone" method="post">
         <p id="countdown" style="display: none">You can resend code in <span></span> seconds</p>
         <input type="hidden" name="phone" id="phone-number" value={{phone}}>
         <input class="mini-submit-button" id="resend-code" type="submit" name="send-code" value="resend code" style="display: none">
@@ -16,13 +16,13 @@
 
 <div class="links-field">
     <form action="/customer/login" method="get">
-        <div class="login-link"> If you already have an account, please
+        <div class="login-link"> If you want to come back to login page, please click back
             <input class="link-button" type="submit" name="to-login-page" value="LOGIN">
         </div>
     </form>
     <form action="/customer/signup" method="get">
-        <div class="login-link"> If you want to change phone number, please click
-            <input class="link-button" type="submit" name="to-signup-page" value="BACK">
+        <div class="login-link"> If you do not have an account, please
+            <input class="link-button" type="submit" name="to-signup-page" value="SIGN UP">
         </div>
     </form>
 </div>

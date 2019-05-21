@@ -14,7 +14,7 @@ const smsCodeSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        expires: 60
+        expires: 15
     }
 });
 

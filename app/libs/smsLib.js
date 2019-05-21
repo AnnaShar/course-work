@@ -8,6 +8,7 @@ exports.send = (phone, text) => {
         method: 'GET',
         qs: {
             to: phone,
+            from: 'Customer Authorization',
             text: text,
             api_id: config.sms.api_id,
             test: config.sms.test

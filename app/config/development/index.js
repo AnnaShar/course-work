@@ -15,7 +15,7 @@ const config = {
     port : 3000,
     sms : {
         api_id : '6E4C6315-99D0-5962-0CF7-4A664E97A0FC', //Выдается при регистрации на sms.ru
-        test : 1
+        //test : 1
     },
     sessionSecret :'secret'
 };

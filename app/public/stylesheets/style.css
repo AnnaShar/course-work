@@ -50,7 +50,7 @@ body{
 
 .links-field{
   position: absolute;
-  bottom: 14%;
+  bottom: 10%;
 }
 
 .button-area{
@@ -251,4 +251,37 @@ h1{
 .button-wrap{
   display: flex;
   justify-content: center;
+}
+
+.forgot-password-button{
+  outline: none;
+  background: transparent;
+  border: none;
+  color: #048a55;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#login-button{
+  position: absolute;
+  bottom: 10px;
+  left: 30%;
+}
+
+.forgot-password-form{
+  position: absolute;
+  right: 20px;
+  bottom: 75px;
+}
+#forgot-passw-sendcode{
+  margin-top: -4px;
+}
+
+.button-login-form{
+  position: absolute;
+  left: 30%;
+  bottom: 35%;
+}
+h2{
+  color: #777574;
 }
